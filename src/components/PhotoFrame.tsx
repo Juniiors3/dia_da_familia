@@ -46,10 +46,16 @@ export default function PhotoFrame({ photos, onClose }: PhotoFrameProps) {
     }
   };
 
-  if (photos.length === 0) return null;
+  useEffect(() => {
+    if (currentIndex >= photos.length && photos.length > 0) {
+      setCurrentIndex(0);
+    }
+  }, [photos.length, currentIndex]);
 
-  const currentPhoto = photos[currentIndex];
+  const currentPhoto = photos[currentIndex] || photos[0];
   const currentQuote = INSPIRATIONAL_QUOTES[quoteIndex];
+
+  if (!currentPhoto) return null;
 
   return (
     <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center overflow-hidden">
