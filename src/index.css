@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", serif;
+  
+  --color-primary: #3b82f6;
+  --color-accent: #f59e0b;
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-slate-900 font-sans antialiased;
+  }
+}
+
+.slide-transition-enter {
+  opacity: 0;
+  transform: scale(0.95) translateY(10px);
+}
+
+.slide-transition-enter-active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: opacity 500ms, transform 500ms;
+}
+
+.slide-transition-exit {
+  opacity: 1;
+}
+
+.slide-transition-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
