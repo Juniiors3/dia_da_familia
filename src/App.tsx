@@ -19,18 +19,28 @@ export default function App() {
   const [isSyncing, setIsSyncing] = useState(false);
   const [hasInitialized, setHasInitialized] = useState(false);
 
+  const SAMPLE_PHOTOS: Photo[] = [
+    { id: 'sample-1', url: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=1000', name: 'Almoço em Família' },
+    { id: 'sample-2', url: 'https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?q=80&w=1000', name: 'Momentos no Jardim' },
+    { id: 'sample-3', url: 'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?q=80&w=1000', name: 'Caminhada Juntos' },
+    { id: 'sample-4', url: 'https://images.unsplash.com/photo-1506836462214-5f53106173a7?q=80&w=1000', name: 'Brincadeiras' },
+    { id: 'sample-5', url: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=1000', name: 'Gerações' }
+  ];
+
   const fetchPhotos = useCallback(async () => {
     setIsSyncing(true);
     try {
       const response = await fetch('/api/photos');
       const data = await response.json();
       
+      const finalPhotos = data.length > 0 ? data : SAMPLE_PHOTOS;
+      
       // Comparação simples para evitar re-renders desnecessários se a lista não mudou
-      if (JSON.stringify(data) !== JSON.stringify(photos)) {
-        setPhotos(data);
+      if (JSON.stringify(finalPhotos) !== JSON.stringify(photos)) {
+        setPhotos(finalPhotos);
         
         // Auto-start na primeira vez que detecta fotos
-        if (data.length > 0 && !hasInitialized) {
+        if (finalPhotos.length > 0 && !hasInitialized) {
           setIsPresenting(true);
           setHasInitialized(true);
         }
